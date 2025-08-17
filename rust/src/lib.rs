@@ -1,5 +1,6 @@
 pub mod atoi;
 pub mod fibonacci;
+pub mod linklist_82;
 pub mod linklist_83;
 pub mod max_area;
 pub mod median;
