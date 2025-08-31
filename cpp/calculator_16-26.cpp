@@ -1,5 +1,4 @@
 #include <string>
-#include <vector>
 
 int digit(char c) {
   if (c >= '0' && c <= '9') {
@@ -9,7 +8,9 @@ int digit(char c) {
 }
 
 int calculate(std::string s) {
-  std::vector<int> parsed;
+  int result = 0;
+  int prev_parsed = 0;
+
   char op = '+';
   int val = 0;
   for (char c : s) {
@@ -22,33 +23,32 @@ int calculate(std::string s) {
     }
 
     if (op == '-') {
-      val = -val;
+      result += prev_parsed;
+      prev_parsed = -val;
     } else if (op == '*') {
-      val = parsed.back() * val;
-      parsed.pop_back();
+      prev_parsed *= val;
     } else if (op == '/') {
-      val = parsed.back() / val;
-      parsed.pop_back();
+      prev_parsed /= val;
+    } else {
+      result += prev_parsed;
+      prev_parsed = val;
     }
-    parsed.push_back(val);
 
     op = c;
     val = 0;
   }
   if (op == '-') {
-    val = -val;
+    result += prev_parsed;
+    prev_parsed = -val;
   } else if (op == '*') {
-    val = parsed.back() * val;
-    parsed.pop_back();
+    prev_parsed *= val;
   } else if (op == '/') {
-    val = parsed.back() / val;
-    parsed.pop_back();
+    prev_parsed /= val;
+  } else {
+    result += prev_parsed;
+    prev_parsed = val;
   }
-  parsed.push_back(val);
+  result += prev_parsed;
 
-  int result = 0;
-  for (int n : parsed) {
-    result += n;
-  }
   return result;
 }
