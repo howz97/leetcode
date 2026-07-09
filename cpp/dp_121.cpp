@@ -12,3 +12,5 @@ int maxProfit(std::vector<int> &prices) {
   }
   return max_profix;
 }
+
+int main() { return 0; }

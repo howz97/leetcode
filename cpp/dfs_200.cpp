@@ -36,3 +36,5 @@ int numIslands(std::vector<std::vector<char>> &grid) {
   }
   return cnt;
 }
+
+int main() { return 0; }

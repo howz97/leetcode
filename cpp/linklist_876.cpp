@@ -19,3 +19,5 @@ ListNode *middleNode(ListNode *head) {
   }
   return slow;
 }
+
+int main() { return 0; }

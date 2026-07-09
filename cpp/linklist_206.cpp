@@ -22,3 +22,5 @@ ListNode *reverseList(ListNode *head) {
   cur->next = prev;
   return cur;
 }
+
+int main() { return 0; }

@@ -53,3 +53,5 @@ Node *treeToDoublyList(Node *root) {
   tail->right = head;
   return head;
 }
+
+int main() { return 0; }

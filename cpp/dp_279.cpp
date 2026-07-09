@@ -13,3 +13,5 @@ int numSquares(int n) {
   }
   return result[n];
 }
+
+int main() { return 0; }

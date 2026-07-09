@@ -29,3 +29,5 @@ ListNode *deleteDuplicates(ListNode *head) {
     prev->next = del_end->next;
   }
 }
+
+int main() { return 0; }

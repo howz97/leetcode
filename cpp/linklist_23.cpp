@@ -31,3 +31,5 @@ ListNode *mergeKLists(std::vector<ListNode *> &lists) {
   }
   return dummy_head.next;
 }
+
+int main() { return 0; }

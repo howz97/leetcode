@@ -52,3 +52,5 @@ ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
   }
   return reverseList(dummy_head.next);
 }
+
+int main() { return 0; }

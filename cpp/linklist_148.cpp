@@ -49,3 +49,5 @@ ListNode *sortList(ListNode *head) {
   }
   return dummy_head.next;
 }
+
+int main() { return 0; }

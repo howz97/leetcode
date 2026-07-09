@@ -30,3 +30,5 @@ std::vector<std::vector<int>> combinationSum(std::vector<int> &candidates,
   dfs(candidates, 0, prefix, target, results);
   return results;
 }
+
+int main() { return 0; }

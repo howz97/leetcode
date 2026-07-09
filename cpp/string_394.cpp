@@ -43,3 +43,5 @@ std::string decode(std::string_view s) {
 }
 
 std::string decodeString(std::string s) { return decode(s); }
+
+int main() { return 0; }

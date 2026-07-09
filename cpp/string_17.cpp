@@ -25,3 +25,5 @@ std::vector<std::string> letterCombinations(std::string digits) {
   }
   return result;
 }
+
+int main() { return 0; }

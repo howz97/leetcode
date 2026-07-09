@@ -52,3 +52,5 @@ int calculate(std::string s) {
 
   return result;
 }
+
+int main() { return 0; }

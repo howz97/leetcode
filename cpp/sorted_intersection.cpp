@@ -1,41 +1,45 @@
 #include <algorithm>
-#include <cstddef>
+#include <climits>
 #include <iostream>
+#include <span>
 #include <vector>
 
 std::vector<int> intersection(std::vector<std::vector<int>> sets) {
-  int max = -1;
+  std::vector<std::span<int>> span_sets;
+  span_sets.reserve(sets.size());
+  int max = INT_MIN;
   for (int i = 0; i < sets.size(); i++) {
-    if (sets[i].empty()) {
+    std::vector<int> &set = sets[i];
+    if (set.empty()) {
       return {};
     }
-    max = std::max(max, sets[i][0]);
+    max = std::max(max, set[0]);
+    span_sets.push_back(set);
   }
 
-  std::vector<size_t> cursors;
-  cursors.resize(sets.size(), 0);
   std::vector<int> result;
   while (true) {
-    for (int i = 0; i < sets.size(); i++) {
-      auto &set = sets[i];
-      while (set[cursors[i]] < max) {
-        cursors[i]++;
-        if (cursors[i] >= set.size()) {
+    for (int i = 0; i < span_sets.size(); i++) {
+      auto &set = span_sets[i];
+      while (set[0] < max) {
+        set = set.subspan(1);
+        if (set.empty()) {
           return result;
         }
       }
-      if (set[cursors[i]] > max) {
-        max = set[cursors[i]];
+      if (set[0] > max) {
+        max = set[0];
         i = -1;
       }
     }
-    result.push_back(sets[0][cursors[0]]);
-    for (int i = 0; i < cursors.size(); i++) {
-      cursors[i]++;
-      if (cursors[i] >= sets[i].size()) {
+    result.push_back(span_sets[0][0]);
+    for (int i = 0; i < span_sets.size(); i++) {
+      auto &set = span_sets[i];
+      set = set.subspan(1);
+      if (set.empty()) {
         return result;
       }
-      max = std::max(max, sets[i][cursors[i]]);
+      max = std::max(max, set[0]);
     }
   }
 }
