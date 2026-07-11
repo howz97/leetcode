@@ -1,33 +1,47 @@
-struct ListNode {
-  int val;
-  ListNode *next;
-  ListNode() : val(0), next(nullptr) {}
-  ListNode(int x) : val(x), next(nullptr) {}
-  ListNode(int x, ListNode *next) : val(x), next(next) {}
-};
+#include "linklist.h"
+#include <iostream>
 
-ListNode *deleteDuplicates(ListNode *head) {
+ListNode *deduplicate(ListNode *head) {
   ListNode dummy_head(0, head);
   ListNode *prev = &dummy_head;
   while (true) {
-    if (prev->next == nullptr) {
+    ListNode *current = prev->next;
+    if (current == nullptr) {
       return dummy_head.next;
     }
-    if (prev->next->next == nullptr) {
-      return dummy_head.next;
+
+    ListNode *next = current->next;
+    bool has_dup = false;
+    while (next != nullptr && next->val == current->val) {
+      has_dup = true;
+      next = next->next;
     }
-    while (prev->next->val != prev->next->next->val) {
+    if (has_dup) {
+      prev->next = next;
+    } else {
       prev = prev->next;
-      if (prev->next->next == nullptr) {
-        return dummy_head.next;
-      }
     }
-    ListNode *del_end = prev->next->next;
-    while (del_end->next != nullptr && del_end->val == del_end->next->val) {
-      del_end = del_end->next;
+    if (next == nullptr) {
+      return dummy_head.next;
     }
-    prev->next = del_end->next;
   }
 }
 
-int main() { return 0; }
+void testCase(const std::vector<int> &input) {
+  ListNode *head = VecToList(input);
+  head = deduplicate(head);
+  while (head != nullptr) {
+    std::cout << head->val << " ";
+    head = head->next;
+  }
+  std::cout << std::endl;
+}
+
+int main() {
+  testCase({1, 1, 2, 3, 3, 4, 6, 8, 8, 8, 9});
+  testCase({1, 2, 3, 3, 4, 6, 8, 8, 8, 9, 9});
+  testCase({1, 2, 3, 3, 4, 8, 8, 8, 9});
+  testCase({1, 1, 2, 2, 3, 3, 3});
+  testCase({1, 2, 3});
+  return 0;
+}

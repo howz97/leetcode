@@ -1,34 +1,28 @@
+#include "linklist.h"
 #include <iostream>
-struct ListNode {
-  int val;
-  ListNode *next;
-  ListNode() : val(0), next(nullptr) {}
-  ListNode(int x) : val(x), next(nullptr) {}
-  ListNode(int x, ListNode *next) : val(x), next(next) {}
-};
 
 ListNode *oddEvenList(ListNode *head) {
-  if (head == nullptr || head->next == nullptr)
+  if (head == nullptr || head->next == nullptr) {
     return head;
-  ListNode *odd_tail = head;
-  ListNode *even_head = head->next;
-  ListNode *even_tail = head->next;
-
-  bool odd_cur = true;
-  ListNode *cur = head->next->next;
-  while (cur != nullptr) {
-    if (odd_cur) {
-      odd_tail->next = cur;
-      odd_tail = cur;
-    } else {
-      even_tail->next = cur;
-      even_tail = cur;
-    }
-    odd_cur = !odd_cur;
-    cur = cur->next;
   }
-  odd_tail->next = even_head;
-  even_tail->next = nullptr;
+  ListNode *even_head = head->next;
+
+  bool right_is_even = true;
+  ListNode *left = head;
+  ListNode *right = even_head;
+  while (right->next != nullptr) {
+    left->next = right->next;
+    left = right;
+    right = right->next;
+    right_is_even = !right_is_even;
+  }
+
+  if (right_is_even) {
+    left->next = even_head;
+  } else {
+    left->next = nullptr;
+    right->next = even_head;
+  }
   return head;
 }
 

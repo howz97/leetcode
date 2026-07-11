@@ -1,3 +1,4 @@
+#include <iostream>
 #include <string>
 
 int digit(char c) {
@@ -11,17 +12,7 @@ int calculate(std::string s) {
   int result = 0;
   int prev_parsed = 0;
 
-  char op = '+';
-  int val = 0;
-  for (char c : s) {
-    if (c == ' ') {
-      continue;
-    }
-    if (int n = digit(c); n >= 0) {
-      val = (val * 10) + n;
-      continue;
-    }
-
+  auto calc = [&result, &prev_parsed](char op, int val) {
     if (op == '-') {
       result += prev_parsed;
       prev_parsed = -val;
@@ -33,24 +24,32 @@ int calculate(std::string s) {
       result += prev_parsed;
       prev_parsed = val;
     }
+  };
 
+  char op = '+';
+  int val = 0;
+  for (char c : s) {
+    if (c == ' ') {
+      continue;
+    }
+    if (int n = digit(c); n >= 0) {
+      val = (val * 10) + n;
+      continue;
+    }
+
+    calc(op, val);
     op = c;
     val = 0;
   }
-  if (op == '-') {
-    result += prev_parsed;
-    prev_parsed = -val;
-  } else if (op == '*') {
-    prev_parsed *= val;
-  } else if (op == '/') {
-    prev_parsed /= val;
-  } else {
-    result += prev_parsed;
-    prev_parsed = val;
-  }
+  calc(op, val);
   result += prev_parsed;
 
   return result;
 }
 
-int main() { return 0; }
+int main() {
+  std::cout << calculate(" 1+2*3") << std::endl;
+  std::cout << calculate(" 1 + 2 * 3+1") << std::endl;
+  std::cout << calculate(" 1+10+2*3") << std::endl;
+  return 0;
+}

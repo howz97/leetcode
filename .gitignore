@@ -1,4 +1,5 @@
 .vscode/
+build/
 cpp/.cache/
 cpp/build
 rust/target
